@@ -74,11 +74,23 @@ public class ExampleWebcam : MonoBehaviour
             tex.SetPixels32(data);
             tex.Apply();
 
-            // Set up decoding options with allowed formats
-            var options = new DecodingOptions { PossibleFormats = allowedFormats };
+            // Set up decoding options with allowed formats and TryHarder
+            var options = new DecodingOptions { PossibleFormats = allowedFormats, TryHarder = true };
             var reader = new BarcodeReader { Options = options };
             var result = reader.Decode(tex.GetPixels32(), tex.width, tex.height);
 
+            // If not found, try rotated versions (90, 180, 270 degrees)
+            if (result == null)
+            {
+                for (int i = 1; i <= 3; i++)
+                {
+                    var rotated = RotateTexture(tex, 90 * i);
+                    result = reader.Decode(rotated.GetPixels32(), rotated.width, rotated.height);
+                    Destroy(rotated);
+                    if (result != null) break;
+                }
+            }
+            Destroy(tex);
             if (result != null)
             {
                 Debug.Log("Format: " + result.BarcodeFormat);
@@ -149,5 +161,41 @@ public class ExampleWebcam : MonoBehaviour
             Gizmos.DrawLine(scanTL, scanBL);
         }
         // Optionally, add similar logic for 3D Renderer if needed
+    }
+
+    // Rotates a Texture2D by the given angle (must be 90, 180, or 270)
+    private Texture2D RotateTexture(Texture2D original, int angle)
+    {
+        int w = original.width;
+        int h = original.height;
+        Texture2D rotated = new Texture2D(h, w, original.format, false);
+        Color32[] origPixels = original.GetPixels32();
+        Color32[] rotatedPixels = new Color32[origPixels.Length];
+        for (int y = 0; y < h; y++)
+        {
+            for (int x = 0; x < w; x++)
+            {
+                int newX = 0, newY = 0;
+                switch (angle)
+                {
+                    case 90:
+                        newX = h - 1 - y;
+                        newY = x;
+                        break;
+                    case 180:
+                        newX = w - 1 - x;
+                        newY = h - 1 - y;
+                        break;
+                    case 270:
+                        newX = y;
+                        newY = w - 1 - x;
+                        break;
+                }
+                rotatedPixels[newY * h + newX] = origPixels[y * w + x];
+            }
+        }
+        rotated.SetPixels32(rotatedPixels);
+        rotated.Apply();
+        return rotated;
     }
 }
