@@ -17,8 +17,10 @@ MonoBehaviour:
     description: 
     hasGuard: 0
     nutriments:
-      proteins: 0
-      fat: 0
+      proteins: 100
+      fat: 632.5
       carbohydrates: 0
       energy: 0
+    health: 10000
+  actions: 00000000010000000200000003000000
   baseStats: {fileID: 11400000, guid: 36a50296af697483ab03648f829bfe21, type: 2}

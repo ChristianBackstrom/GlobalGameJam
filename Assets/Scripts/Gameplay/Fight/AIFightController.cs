@@ -26,7 +26,7 @@ public class AIFightController : MonoBehaviour
 
     private void HandleFightStarted()
     {
-        enemyHealthText.text = FightManagerSingleton.Instance.CurrentEnemy.nutriments.fat.ToString();
+        enemyHealthText.text = FightManagerSingleton.Instance.CurrentEnemy.health.ToString();
     }
 
     private void HandleFightEnded()
@@ -35,7 +35,7 @@ public class AIFightController : MonoBehaviour
 
     private void HandleTurnResolved()
     {
-        enemyHealthText.text = FightManagerSingleton.Instance.CurrentEnemy.nutriments.fat.ToString();
+        enemyHealthText.text = FightManagerSingleton.Instance.CurrentEnemy.health.ToString();
     }
 
     private void OnFightStateChanged(FightManagerSingleton.FightState state)

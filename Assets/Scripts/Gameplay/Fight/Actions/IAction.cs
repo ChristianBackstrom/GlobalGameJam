@@ -29,4 +29,10 @@ public interface IAction
   /// Checks if the action can be initiated
   /// </summary>
   bool CanUse();
+
+
+  /// <summary>
+  /// Resets the action state (for example, when a fight ends)
+  /// </summary>
+  void Reset();
 }

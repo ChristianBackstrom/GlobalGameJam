@@ -44,4 +44,9 @@ public class HeavyStrike : IAction
       }
     }
   }
+
+  public void Reset()
+  {
+    currentCooldownTurn = COOLDOWN_TURNS;
+  }
 }

@@ -68,21 +68,18 @@ public class PlayerFightController : MonoBehaviour
         Debug.Log("UI: Fight has started.");
         // Update UI to show fight elements
 
-        playerHealthText.text = PlayerManagerSingleton.Instance.GetPlayerNutriments().fat.ToString();
-        foreach (var action in PlayerManagerSingleton.Instance.GetPlayerEntity().actions)
+        playerHealthText.text = PlayerManagerSingleton.Instance.GetPlayerEntity().stats.health.ToString();
+
+        // Use persistent actions from PlayerManagerSingleton instead of creating new ones
+        foreach (var actionPair in PlayerManagerSingleton.Instance.GetAllPlayerActions())
         {
-            IAction builtAction = action switch
-            {
-                ActionName.Attack => new Attack(),
-                ActionName.Guard => new Guard(),
-                ActionName.ChargedStrike => new ChargedAttack(),
-                ActionName.HeavyStrike => new HeavyStrike(),
-                _ => null
-            };
+            var actionName = actionPair.Key;
+            var action = actionPair.Value;
+
             var button = Instantiate(actionButtonPrefab, actionButtonContainer);
-            button.GetComponentInChildren<TMP_Text>().text = action.ToString();
-            button.onClick.AddListener(() => ExecuteActionByType(builtAction));
-            availableActions.Add(builtAction, button);
+            button.GetComponentInChildren<TMP_Text>().text = actionName.ToString();
+            button.onClick.AddListener(() => ExecuteActionByType(action));
+            availableActions.Add(action, button);
         }
     }
 
@@ -96,6 +93,6 @@ public class PlayerFightController : MonoBehaviour
     {
         Debug.Log("UI: Turn has been resolved.");
         // Update UI elements based on the new state
-        playerHealthText.text = PlayerManagerSingleton.Instance.GetPlayerNutriments().fat.ToString();
+        playerHealthText.text = PlayerManagerSingleton.Instance.GetPlayerEntity().stats.health.ToString();
     }
 }

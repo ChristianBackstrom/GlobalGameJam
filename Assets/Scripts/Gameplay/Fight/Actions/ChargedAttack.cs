@@ -30,7 +30,7 @@ public class ChargedAttack : IAction
     else if (isFullyCharged)
     {
       // Execute the charged attack
-      float damage = actor.nutriments.proteins * 2f;
+      float damage = actor.nutriments.proteins * 3f;
       target.TakeDamage(damage);
 
       // Reset state
@@ -56,5 +56,11 @@ public class ChargedAttack : IAction
         Debug.Log($"Charging... ({currentChargeTurn}/{CHARGE_TURNS})");
       }
     }
+  }
+
+  public void Reset()
+  {
+    isCharging = false;
+    currentChargeTurn = 0;
   }
 }

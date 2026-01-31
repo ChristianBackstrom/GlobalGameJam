@@ -47,6 +47,6 @@ public struct EntityStats
             hasGuard = false; // Guard is consumed after blocking
         }
 
-        nutriments.fat -= damage;
+        health -= Mathf.CeilToInt(damage);
     }
 }

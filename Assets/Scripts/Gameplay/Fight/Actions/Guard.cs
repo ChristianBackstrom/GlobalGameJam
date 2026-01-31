@@ -19,4 +19,9 @@ public class Guard : IAction
   }
 
   public bool CanUse() => true;
+
+  public void Reset()
+  {
+    // No state to reset for Guard
+  }
 }

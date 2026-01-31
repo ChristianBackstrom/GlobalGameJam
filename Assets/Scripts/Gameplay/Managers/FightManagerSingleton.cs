@@ -120,12 +120,13 @@ public class FightManagerSingleton : MonoBehaviour
 
         if (defender.health <= 0)
         {
-            EndFight(attacker);
-            CurrentFightState = FightState.Finished;
             if (defender.name == PlayerManagerSingleton.Instance.GetPlayerEntity().stats.name)
             {
                 SimpleSceneManager.Instance.LoadGameSceneAdditive(SimpleSceneManager.deathSceneName);
+                return;
             }
+            EndFight(attacker);
+            CurrentFightState = FightState.Finished;
             return;
         }
 
@@ -145,6 +146,8 @@ public class FightManagerSingleton : MonoBehaviour
         Debug.Log("Fight ended. Winner: " + attacker.name);
 
         SoundManager.Instance.PlaySound("Scream");
+
+        PlayerManagerSingleton.Instance.ResetActions();
 
         // Unload the fight scene
         SceneManager.UnloadSceneAsync(fightSceneName);

@@ -15,8 +15,12 @@ MonoBehaviour:
   stats:
     name: Enemy
     description: 
+    hasGuard: 0
     nutriments:
-      proteins: 5
+      proteins: 10
       fat: 100
-      carbohydrates: 1
-      energy: 1
+      carbohydrates: 5
+      energy: 5
+    health: 100
+  actions: 
+  baseStats: {fileID: 11400000}
