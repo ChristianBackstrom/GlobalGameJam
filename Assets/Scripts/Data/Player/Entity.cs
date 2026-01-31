@@ -11,9 +11,7 @@ public class EntityData : ScriptableObject
     public List<ActionName> actions; // List of action names the entity can perform
 
     public EntityData baseStats;
-
-
-
+    
     [ContextMenu("Reset Stats")]
     public void ResetToBaseValues()
     {
