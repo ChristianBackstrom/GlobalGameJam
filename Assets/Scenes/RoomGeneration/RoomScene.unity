@@ -150,6 +150,7 @@ Transform:
   m_Children:
   - {fileID: 809820330}
   - {fileID: 1958932415}
+  - {fileID: 1831499395}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &264142480
@@ -1193,6 +1194,7 @@ MonoBehaviour:
   moveSpeed: 5
   stopDistance: 0.05
   moveActionRef: {fileID: 3001919216989983466, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  roomAreaSprite: {fileID: 0}
 --- !u!50 &1367866457
 Rigidbody2D:
   serializedVersion: 5
@@ -1604,6 +1606,57 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1831499394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1831499395}
+  - component: {fileID: 1831499396}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1831499395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831499394}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7902380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1831499396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831499394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ab3951f2909744d8da96208c14d9d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Scream
+    clip: {fileID: 8300000, guid: 7a4d83df939f31c4dbd756ce4d2e177f, type: 3}
+    pitch: 0.2
+    volume: 1
+    source: {fileID: 0}
+  audioSourcePrefab: {fileID: 5246873547143438283, guid: 5f03f40634027c946bd37003e8b12e03, type: 3}
 --- !u!1 &1958932414
 GameObject:
   m_ObjectHideFlags: 0

@@ -140,6 +140,8 @@ public class FightManagerSingleton : MonoBehaviour
     {
         Debug.Log("Fight ended. Winner: " + attacker.name);
 
+        SoundManager.Instance.PlaySound("Scream");
+
         // Unload the fight scene
         SceneManager.UnloadSceneAsync(fightSceneName);
 
