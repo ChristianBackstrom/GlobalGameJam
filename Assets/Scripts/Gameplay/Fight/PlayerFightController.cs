@@ -19,15 +19,27 @@ public class PlayerFightController : MonoBehaviour
 
         attackButton.onClick.AddListener(() =>
         {
-            var player = PlayerManagerSingleton.Instance.GetPlayerEntity();
-            var enemy = FightManagerSingleton.Instance.CurrentEnemy;
+
             var attackAction = new Attack();
 
-            FightManagerSingleton.Instance.ResolveTurn(ref player.stats, ref enemy, attackAction);
-
-            // Write the modified enemy back to the singleton
-            FightManagerSingleton.Instance.CurrentEnemy = enemy;
+            ExecuteActionByType(attackAction);
         });
+
+        defendButton.onClick.AddListener(() =>
+        {
+            var guardAction = new Guard();
+            ExecuteActionByType(guardAction);
+        });
+    }
+
+    private void ExecuteActionByType<T>(T action) where T : IAction
+    {
+        var player = PlayerManagerSingleton.Instance.GetPlayerEntity();
+        var enemy = FightManagerSingleton.Instance.CurrentEnemy;
+        FightManagerSingleton.Instance.ResolveTurn(ref player.stats, ref enemy, action);
+
+        // Write the modified enemy back to the singleton
+        FightManagerSingleton.Instance.CurrentEnemy = enemy;
     }
 
 
@@ -45,6 +57,11 @@ public class PlayerFightController : MonoBehaviour
         {
             attackButton.interactable = true;
             defendButton.interactable = true;
+
+            if (PlayerManagerSingleton.Instance.GetPlayerEntity().stats.hasGuard)
+            {
+                PlayerManagerSingleton.Instance.GetPlayerEntity().stats.hasGuard = false;
+            }
         }
         else
         {

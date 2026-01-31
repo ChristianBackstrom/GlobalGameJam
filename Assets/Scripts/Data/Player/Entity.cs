@@ -19,5 +19,21 @@ public struct EntityStats
 {
     public string name;
     public string description;
+    public bool hasGuard;
     public Nutrients nutriments;
+
+    /// <summary>
+    /// Applies damage to this entity, accounting for guard status.
+    /// If the entity has guard, damage is halved and guard is consumed.
+    /// </summary>
+    public void TakeDamage(float damage)
+    {
+        if (hasGuard)
+        {
+            damage *= 0.5f;
+            hasGuard = false; // Guard is consumed after blocking
+        }
+
+        nutriments.fat -= damage;
+    }
 }

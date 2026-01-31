@@ -6,6 +6,6 @@ public class Attack : IAction
   {
     float damage = actor.nutriments.proteins;
 
-    target.nutriments.fat -= damage;
+    target.TakeDamage(damage);
   }
 }

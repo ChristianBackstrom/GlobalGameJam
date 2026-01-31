@@ -15,7 +15,7 @@ public class SimpleEnemyAI : MonoBehaviour
     private float stateTimer = 0f;
     private Vector3 patrolTarget;
     private Transform player;
-    
+
     [HideInInspector] public EnemySpawner spawner;
 
     private void OnDestroy()
@@ -92,8 +92,17 @@ public class SimpleEnemyAI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Implement damage to player here
-            Debug.Log("Player hit by enemy!");
+            FightManagerSingleton.Instance.StartRandomFight();
+            Time.timeScale = 0f; // Pause the game during the fight 
+
+            FightManagerSingleton.OnFightEnded += ResumeGame;
         }
+    }
+
+    private void ResumeGame()
+    {
+        Destroy(gameObject); // Remove enemy after fight
+        Time.timeScale = 1f; // Resume the game
+        FightManagerSingleton.OnFightEnded -= ResumeGame;
     }
 }

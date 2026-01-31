@@ -17,6 +17,6 @@ MonoBehaviour:
     description: 
     nutriments:
       proteins: 10
-      fat: 100
+      fat: 10000
       carbohydrates: 5
       energy: 5

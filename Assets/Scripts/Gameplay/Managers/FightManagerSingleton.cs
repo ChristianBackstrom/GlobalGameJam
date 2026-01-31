@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +23,7 @@ public class FightManagerSingleton : MonoBehaviour
     #endregion
 
     [SerializeField] private string fightSceneName = "FightScene";
+    [SerializeField] private List<EntityData> Enemies;
 
     public EntityStats CurrentEnemy;
 
@@ -55,14 +57,19 @@ public class FightManagerSingleton : MonoBehaviour
         InitializeSingleton();
     }
 
-#if UNITY_EDITOR
-    [SerializeField] private EntityData debugEnemy;
+
     [ContextMenu("Start Debug Fight")]
-    private void StartDebugFight()
+    public void StartRandomFight()
     {
-        StartFight(debugEnemy.stats);
+        if (Enemies != null && Enemies.Count > 0)
+        {
+            StartFight(Enemies[UnityEngine.Random.Range(0, Enemies.Count)].stats);
+        }
+        else
+        {
+            Debug.LogWarning("No enemies assigned to FightManagerSingleton.");
+        }
     }
-#endif
 
     public void StartFight(EntityStats enemy)
     {
