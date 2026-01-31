@@ -1211,10 +1211,7 @@ MonoBehaviour:
   stopDistance: 0.05
   moveActionRef: {fileID: 3001919216989983466, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   roomAreaSprite: {fileID: 0}
-<<<<<<< HEAD
-=======
   pathLineRender: {fileID: 2055964225}
->>>>>>> 68b14b695220899d7cb8d66cee3b2727bcae5277
 --- !u!50 &1367866457
 Rigidbody2D:
   serializedVersion: 5
