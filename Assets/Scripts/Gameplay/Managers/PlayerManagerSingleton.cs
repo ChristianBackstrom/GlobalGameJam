@@ -122,10 +122,10 @@ public class PlayerManagerSingleton : MonoBehaviour
     {
         if (playerEntity != null)
         {
-            playerEntity.stats.nutriments.proteins += additionalNutriments.proteins * proteinModifier;
-            playerEntity.stats.nutriments.fat += additionalNutriments.fat * fatModifier;
-            playerEntity.stats.nutriments.carbohydrates += additionalNutriments.carbohydrates * carbModifier;
-            playerEntity.stats.nutriments.energy += additionalNutriments.energy * energyModifier;
+            playerEntity.stats.nutriments.proteins += Mathf.Floor(additionalNutriments.proteins * proteinModifier);
+            playerEntity.stats.nutriments.fat += Mathf.Floor(additionalNutriments.fat * fatModifier);
+            playerEntity.stats.nutriments.carbohydrates += Mathf.Floor(additionalNutriments.carbohydrates * carbModifier);
+            playerEntity.stats.nutriments.energy += Mathf.Floor(additionalNutriments.energy * energyModifier);
         }
         else
         {
