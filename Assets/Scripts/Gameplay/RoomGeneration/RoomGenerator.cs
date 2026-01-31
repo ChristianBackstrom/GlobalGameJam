@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class RoomGenerator : MonoBehaviour
 {
@@ -8,28 +9,10 @@ public class RoomGenerator : MonoBehaviour
     [SerializeField] private int roomHeight;
 
     [Header("Prefab References")]
-    [SerializeField] private GameObject floorPrefab;
-    [SerializeField] private WallPrefab[] wallPrefabs;
     [SerializeField] private GameObject[] obstaclePrefabs;
     [Header("Optional: Parent Objects for Organization")]
-    [SerializeField] private Transform floorParent;
-    [SerializeField] private Transform wallParent;
-    [SerializeField] private Transform obstacleParent;
-
-    [Serializable]
-    internal struct WallPrefab
-    {
-        public WallDirection direction;
-        public GameObject prefab;
-    }
-
-    internal enum WallDirection
-    {
-        NORTH,
-        EAST,
-        SOUTH,
-        WEST
-    }
+    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private RuleTile floorTile;
 
     private void Start()
     {
@@ -43,61 +26,23 @@ public class RoomGenerator : MonoBehaviour
         offsetX = -roomWidth / 2f;
         offsetY = -roomHeight / 2f;
         GenerateFloor();
-        GenerateWalls();
+        // GenerateWalls();
         PlaceObstacles();
     }
 
     private void PlaceObstacles()
     {
-        System.Random rand = new System.Random();
-        int obstacleCount = (roomWidth * roomHeight) / 10; // Example: 10% of the room area
+        // System.Random rand = new System.Random();
+        // int obstacleCount = (roomWidth * roomHeight) / 10; // Example: 10% of the room area
 
-        for (int i = 0; i < obstacleCount; i++)
-        {
-            int x = rand.Next(0, roomWidth);
-            int y = rand.Next(0, roomHeight);
-            GameObject obstaclePrefab = obstaclePrefabs[rand.Next(obstaclePrefabs.Length)];
-            Vector3 pos = new Vector3(x + offsetX, y + offsetY, 0);
-            Instantiate(obstaclePrefab, pos, Quaternion.identity, obstacleParent);
-        }
-    }
-
-    private void GenerateWalls()
-    {
-        foreach (var wall in wallPrefabs)
-        {
-            switch (wall.direction)
-            {
-                case WallDirection.NORTH:
-                    for (int x = 0; x < roomWidth; x++)
-                    {
-                        Vector3 pos = new Vector3(x + offsetX, roomHeight + offsetY, 0);
-                        Instantiate(wall.prefab, pos, Quaternion.identity, wallParent);
-                    }
-                    break;
-                case WallDirection.EAST:
-                    for (int y = 0; y < roomHeight; y++)
-                    {
-                        Vector3 pos = new Vector3(roomWidth + offsetX, y + offsetY, 0);
-                        Instantiate(wall.prefab, pos, Quaternion.identity, wallParent);
-                    }
-                    break;
-                case WallDirection.SOUTH:
-                    for (int x = 0; x < roomWidth; x++)
-                    {
-                        Vector3 pos = new Vector3(x + offsetX, -1 + offsetY, 0);
-                        Instantiate(wall.prefab, pos, Quaternion.identity, wallParent);
-                    }
-                    break;
-                case WallDirection.WEST:
-                    for (int y = 0; y < roomHeight; y++)
-                    {
-                        Vector3 pos = new Vector3(-1 + offsetX, y + offsetY, 0);
-                        Instantiate(wall.prefab, pos, Quaternion.identity, wallParent);
-                    }
-                    break;
-            }
-        }
+        // for (int i = 0; i < obstacleCount; i++)
+        // {
+        //     int x = rand.Next(0, roomWidth);
+        //     int y = rand.Next(0, roomHeight);
+        //     GameObject obstaclePrefab = obstaclePrefabs[rand.Next(obstaclePrefabs.Length)];
+        //     Vector3 pos = new Vector3(x + offsetX, y + offsetY, 0);
+        //     Instantiate(obstaclePrefab, pos, Quaternion.identity, obstacleParent);
+        // }
     }
 
     private void GenerateFloor()
@@ -106,8 +51,8 @@ public class RoomGenerator : MonoBehaviour
         {
             for (int y = 0; y < roomHeight; y++)
             {
-                Vector3 pos = new Vector3(x + offsetX, y + offsetY, 0);
-                Instantiate(floorPrefab, pos, Quaternion.identity, floorParent);
+                Vector3Int tilePos = new Vector3Int(x + Mathf.FloorToInt(offsetX), y + Mathf.FloorToInt(offsetY), 0);
+                tilemap.SetTile(tilePos, floorTile);
             }
         }
     }
