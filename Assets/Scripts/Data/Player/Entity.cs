@@ -8,6 +8,18 @@ public class EntityData : ScriptableObject
     [Header("Entity Information")]
     public EntityStats stats;
 
+    private EntityStats baseStats;
+
+    private void OnEnable()
+    {
+        baseStats = stats;
+    }
+
+    public void ResetToBaseValues()
+    {
+        stats = baseStats;
+    }
+
     public void AddNutriments(Nutrients additionalNutriments)
     {
         stats.nutriments += additionalNutriments;

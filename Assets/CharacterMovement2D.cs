@@ -7,6 +7,9 @@ public class CharacterMovement2D : MonoBehaviour
     public float stopDistance = 0.05f;
     [SerializeField] private InputActionReference moveActionRef;
 
+    [Header("Room Bounds")]
+    [SerializeField] private SpriteRenderer roomAreaSprite; // Assign the room area sprite in inspector
+
     Rigidbody2D rb;
     Vector2 targetPosition;
     bool hasWaypoint = false;
@@ -32,6 +35,12 @@ public class CharacterMovement2D : MonoBehaviour
         if (Mouse.current == null) return;
         var screenPos = Mouse.current.position.ReadValue();
         var worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, -Camera.main.transform.position.z));
+        if (roomAreaSprite != null)
+        {
+            var bounds = roomAreaSprite.bounds;
+            worldPos.x = Mathf.Clamp(worldPos.x, bounds.min.x, bounds.max.x);
+            worldPos.y = Mathf.Clamp(worldPos.y, bounds.min.y, bounds.max.y);
+        }
         targetPosition = new Vector2(worldPos.x, worldPos.y);
         hasWaypoint = true;
     }

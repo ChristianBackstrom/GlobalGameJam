@@ -68,7 +68,6 @@ public class ExampleWebcam : MonoBehaviour
             return;
         //if (snapshotAction != null && snapshotAction.WasPressedThisFrame())
         //{
-            Debug.Log("Snapshot taken");
             data = webcamTexture.GetPixels32();
             var tex = new Texture2D(webcamTexture.width, webcamTexture.height, TextureFormat.RGBA32, false);
             tex.SetPixels32(data);
@@ -99,12 +98,14 @@ public class ExampleWebcam : MonoBehaviour
                     (nut)=>
                     {
                         NutrientInfoText.text =
-    $"Fat: {nut.fat}\n" +
-    $"Protein: {nut.proteins}\n" +
-    $"Carbohydrates: {nut.carbohydrates}\n" +
-    $"Cals: {nut.energy_kcal}\n" +
-    $"Energy: {nut.energy}";
+                            $"Fat: {nut.fat}\n" +
+                            $"Protein: {nut.proteins}\n" +
+                            $"Carbohydrates: {nut.carbohydrates}\n" +
+                            $"Cals: {nut.energy_kcal}\n" +
+                            $"Energy: {nut.energy}";
                         Debug.Log("I found: " + nut);
+                        
+                        PlayerManagerSingleton.Instance.AddNutrimentsToPlayer(nut);
                     },
                     (ex)=>Debug.LogError("Product nutrients not found"));
                 // Stop the webcam when a barcode is found
