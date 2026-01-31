@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FoodDatabase;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class EntityData : ScriptableObject
 {
     [Header("Entity Information")]
     public EntityStats stats;
+    public List<ActionName> actions; // List of action names the entity can perform
 
     public EntityData baseStats;
 

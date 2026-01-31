@@ -76,8 +76,6 @@ public class FightManagerSingleton : MonoBehaviour
         Debug.Log("Fight started with enemy: " + enemy.name);
         CurrentEnemy = enemy;
 
-        OnFightStarted?.Invoke();
-
         // Load the fight scene and initialize fight parameters here
         var loadScene = SceneManager.LoadSceneAsync(fightSceneName, LoadSceneMode.Additive);
         loadScene.completed += OnFightSceneLoaded;
@@ -92,14 +90,32 @@ public class FightManagerSingleton : MonoBehaviour
         ?
         FightState.PlayerTurn :
         FightState.EnemyTurn;
+
+        OnFightStarted?.Invoke();
     }
 
 
     // turn management, attack resolution, etc. would go here
     public void ResolveTurn(ref EntityStats attacker, ref EntityStats defender, IAction action)
     {
-        action.Execute(ref attacker, ref defender);
-        Debug.Log("Turn resolved by " + attacker.name);
+        if (action.CanUse())
+        {
+            action.Execute(ref attacker, ref defender);
+        }
+
+        // Update CurrentEnemy if the enemy was the defender (took damage)
+        // This ensures UI updates see the correct value when OnTurnResolved fires
+        if (CurrentFightState == FightState.PlayerTurn)
+        {
+            // Player is attacking, enemy is defender
+            CurrentEnemy = defender;
+        }
+        else if (CurrentFightState == FightState.EnemyTurn)
+        {
+            // Enemy is attacking, player is defender (no need to update CurrentEnemy)
+        }
+
+        Debug.Log("Turn resolved by " + attacker.name + "; defender has " + defender.nutriments.fat + " fat left.");
         OnTurnResolved?.Invoke();
 
         if (defender.health <= 0)

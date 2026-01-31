@@ -26,6 +26,7 @@ public class AIFightController : MonoBehaviour
 
     private void HandleFightStarted()
     {
+        enemyHealthText.text = FightManagerSingleton.Instance.CurrentEnemy.nutriments.fat.ToString();
     }
 
     private void HandleFightEnded()
@@ -48,8 +49,7 @@ public class AIFightController : MonoBehaviour
 
             FightManagerSingleton.Instance.ResolveTurn(ref enemy, ref player.stats, attackAction);
 
-            // Write the modified enemy back to the singleton
-            FightManagerSingleton.Instance.CurrentEnemy = enemy;
+            // No need to write enemy back - enemy is the attacker, not being modified
         }
     }
 }
