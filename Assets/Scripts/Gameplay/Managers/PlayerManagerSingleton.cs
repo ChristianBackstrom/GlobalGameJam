@@ -62,8 +62,6 @@ public class PlayerManagerSingleton : MonoBehaviour
             {
                 ActionName.Attack => new Attack(),
                 ActionName.Guard => new Guard(),
-                ActionName.ChargedStrike => new ChargedAttack(),
-                ActionName.HeavyStrike => new HeavyStrike(),
                 _ => null
             };
 
