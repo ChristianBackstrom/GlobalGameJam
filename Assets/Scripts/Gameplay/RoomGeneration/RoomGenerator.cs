@@ -40,8 +40,12 @@ public class RoomGenerator : MonoBehaviour
         GenerateRoom();
     }
 
+    private float offsetX, offsetY;
+
     private void GenerateRoom()
     {
+        offsetX = -roomWidth / 2f;
+        offsetY = -roomHeight / 2f;
         GenerateFloor();
         GenerateWalls();
         PlaceObstacles();
@@ -57,7 +61,7 @@ public class RoomGenerator : MonoBehaviour
             int x = rand.Next(0, roomWidth);
             int y = rand.Next(0, roomHeight);
             TileBase obstacleTile = obstacleTiles[rand.Next(obstacleTiles.Length)];
-            obstacleTilemap.SetTile(new Vector3Int(x, y, 0), obstacleTile);
+            obstacleTilemap.SetTile(new Vector3Int(Mathf.RoundToInt(x + offsetX), Mathf.RoundToInt(y + offsetY), 0), obstacleTile);
         }
     }
 
@@ -70,25 +74,25 @@ public class RoomGenerator : MonoBehaviour
                 case WallDirection.NORTH:
                     for (int x = 0; x < roomWidth; x++)
                     {
-                        wallTilemap.SetTile(new Vector3Int(x, roomHeight, 0), wall.tile);
+                        wallTilemap.SetTile(new Vector3Int(Mathf.RoundToInt(x + offsetX), Mathf.RoundToInt(roomHeight + offsetY), 0), wall.tile);
                     }
                     break;
                 case WallDirection.EAST:
                     for (int y = 0; y < roomHeight; y++)
                     {
-                        wallTilemap.SetTile(new Vector3Int(roomWidth, y, 0), wall.tile);
+                        wallTilemap.SetTile(new Vector3Int(Mathf.RoundToInt(roomWidth + offsetX), Mathf.RoundToInt(y + offsetY), 0), wall.tile);
                     }
                     break;
                 case WallDirection.SOUTH:
                     for (int x = 0; x < roomWidth; x++)
                     {
-                        wallTilemap.SetTile(new Vector3Int(x, -1, 0), wall.tile);
+                        wallTilemap.SetTile(new Vector3Int(Mathf.RoundToInt(x + offsetX), Mathf.RoundToInt(-1 + offsetY), 0), wall.tile);
                     }
                     break;
                 case WallDirection.WEST:
                     for (int y = 0; y < roomHeight; y++)
                     {
-                        wallTilemap.SetTile(new Vector3Int(-1, y, 0), wall.tile);
+                        wallTilemap.SetTile(new Vector3Int(Mathf.RoundToInt(-1 + offsetX), Mathf.RoundToInt(y + offsetY), 0), wall.tile);
                     }
                     break;
             }
@@ -101,7 +105,7 @@ public class RoomGenerator : MonoBehaviour
         {
             for (int y = 0; y < roomHeight; y++)
             {
-                floorTilemap.SetTile(new Vector3Int(x, y, 0), floorTile);
+                floorTilemap.SetTile(new Vector3Int(Mathf.RoundToInt(x + offsetX), Mathf.RoundToInt(y + offsetY), 0), floorTile);
             }
         }
     }
