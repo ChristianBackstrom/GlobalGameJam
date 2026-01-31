@@ -10,6 +10,18 @@ public class EntityData : ScriptableObject
     public EntityStats stats;
     public List<ActionName> actions; // List of action names the entity can perform
 
+    private EntityStats baseStats;
+
+    private void OnEnable()
+    {
+        baseStats = stats;
+    }
+
+    public void ResetToBaseValues()
+    {
+        stats = baseStats;
+    }
+
     public void AddNutriments(Nutrients additionalNutriments)
     {
         stats.nutriments += additionalNutriments;
