@@ -1,4 +1,5 @@
 using FoodDatabase;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class OpenFoodDatabaseApi
@@ -12,7 +13,7 @@ public static class OpenFoodDatabaseApi
     // string apiUrl = $"https://world.openfoodfacts.org/api/v0/product/{barcode}.json";
     // StartCoroutine(MakeApiRequest(apiUrl));
 
-    string apiUrl = $"https://world.openfoodfacts.org/api/v0/product/{barcode}.json?fields=nutriments.proteins,nutriments.fat,nutriments.carbohydrates,nutriments.energy";
+    string apiUrl = $"https://world.openfoodfacts.org/api/v0/product/{barcode}.json?fields=categories,nutriments.proteins,nutriments.fat,nutriments.carbohydrates,nutriments.energy";
     Debug.Log($"API URL: {apiUrl}");
     MakeApiRequest(apiUrl, onSuccess, onError);
   }
@@ -31,6 +32,10 @@ public static class OpenFoodDatabaseApi
       var foodData = JsonUtility.FromJson<FoodDatabaseResponse>(data);
 
       onSuccess?.Invoke(foodData.product.nutriments);
+
+      string[] splitCategories = foodData.product.categories.Split(',');
+
+      PlayerManagerSingleton.Instance.categories.AddRange(splitCategories);
     }
     else
     {

@@ -38,6 +38,6 @@ public class BarCodeScanner : MonoBehaviour
     private void OnFetchSuccess(Nutrients obj)
     {
         nutriments = obj;
-        resultText.text = $"Product Data: \n Proteins: {obj.proteins}\n Fat: {obj.fat}\n Carbohydrates: {obj.carbohydrates} \n Energy (kcal): {obj.energy_kcal}";
+        resultText.text = $"Product Data: \n Proteins: {obj.proteins}\n Fat: {obj.fat}\n Carbohydrates: {obj.carbohydrates} \n Energy (kcal): {obj.energy_kcal} ";
     }
 }

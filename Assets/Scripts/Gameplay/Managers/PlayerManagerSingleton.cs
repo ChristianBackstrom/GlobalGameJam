@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FoodDatabase;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class PlayerManagerSingleton : MonoBehaviour
 {
     #region Singleton Pattern
     public static PlayerManagerSingleton Instance { get; private set; }
+
+    public List<string> categories = new List<string>();
 
     private void InitializeSingleton()
     {

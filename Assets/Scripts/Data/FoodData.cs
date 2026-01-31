@@ -12,6 +12,7 @@ namespace FoodDatabase
   [System.Serializable]
   public struct Product
   {
+    public string categories;
     public Nutrients nutriments;
   }
 
