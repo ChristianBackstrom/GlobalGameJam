@@ -9,8 +9,17 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/ScanScene.unity
+    guid: 2f02823b1cd944dd39e381c24ade3735
+  - enabled: 1
     path: Assets/Scenes/FightScenes/FightScene.unity
     guid: 0fe5d447aefeaf4418e06c8379a388a0
+  - enabled: 1
+    path: Assets/Scenes/RoomGeneration/RoomScene.unity
+    guid: 4dc00a02b5dfd3d4885a5655e5708089
+  - enabled: 1
+    path: Assets/Scenes/DeathScene.unity
+    guid: ed3c3eb8d071f436eb96d842f0df3a07
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

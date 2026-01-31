@@ -1,3 +1,4 @@
+using Radishmouse;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +10,8 @@ public class CharacterMovement2D : MonoBehaviour
 
     [Header("Room Bounds")]
     [SerializeField] private SpriteRenderer roomAreaSprite; // Assign the room area sprite in inspector
-
+    [SerializeField] private UILineRenderer pathLineRender;
+    
     Rigidbody2D rb;
     Vector2 targetPosition;
     bool hasWaypoint = false;
@@ -33,8 +35,12 @@ public class CharacterMovement2D : MonoBehaviour
     void OnSetWaypoint(InputAction.CallbackContext ctx)
     {
         if (Mouse.current == null) return;
+        
+        //pathLineRender.points[0] = transform.position;
         var screenPos = Mouse.current.position.ReadValue();
         var worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, -Camera.main.transform.position.z));
+        //pathLineRender.points[1] = worldPos; 
+        
         if (roomAreaSprite != null)
         {
             var bounds = roomAreaSprite.bounds;

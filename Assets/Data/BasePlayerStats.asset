@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0a662db6ef77df4da44e83a6a4aa8a4, type: 3}
-  m_Name: PlayerEntityData
-  m_EditorClassIdentifier: 
+  m_Name: BasePlayerStats
+  m_EditorClassIdentifier: Assembly-CSharp::EntityData
   stats:
-    name: Player
-    description: 
+    name: BaseStats
+    description: base stats for player
     hasGuard: 0
     nutriments:
       proteins: 0
       fat: 0
       carbohydrates: 0
       energy: 0
-  baseStats: {fileID: 11400000, guid: 36a50296af697483ab03648f829bfe21, type: 2}
+  baseStats: {fileID: 0}

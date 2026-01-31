@@ -98,11 +98,11 @@ public class ExampleWebcam : MonoBehaviour
                     (nut)=>
                     {
                         NutrientInfoText.text =
-                            $"Fat: {nut.fat}\n" +
-                            $"Protein: {nut.proteins}\n" +
-                            $"Carbohydrates: {nut.carbohydrates}\n" +
-                            $"Cals: {nut.energy_kcal}\n" +
-                            $"Energy: {nut.energy}";
+                            $"Fat: {nut.fat} + Player: {PlayerManagerSingleton.Instance.GetPlayerNutriments().fat} = {nut.fat + PlayerManagerSingleton.Instance.GetPlayerNutriments().fat}\n" +
+                            $"Protein: {nut.proteins} + Player: {PlayerManagerSingleton.Instance.GetPlayerNutriments().proteins} = {nut.proteins + PlayerManagerSingleton.Instance.GetPlayerNutriments().proteins}\n" +
+                            $"Carbohydrates: {nut.carbohydrates} + Player: {PlayerManagerSingleton.Instance.GetPlayerNutriments().carbohydrates} = {nut.carbohydrates + PlayerManagerSingleton.Instance.GetPlayerNutriments().carbohydrates}\n" +
+                            $"Cals: {nut.energy_kcal} + Player: {PlayerManagerSingleton.Instance.GetPlayerNutriments().energy_kcal} = {nut.energy_kcal + PlayerManagerSingleton.Instance.GetPlayerNutriments().energy_kcal}\n" +
+                            $"Energy: {nut.energy} + Player: {PlayerManagerSingleton.Instance.GetPlayerNutriments().energy} = {nut.energy + PlayerManagerSingleton.Instance.GetPlayerNutriments().energy}";
                         Debug.Log("I found: " + nut);
                         
                         PlayerManagerSingleton.Instance.AddNutrimentsToPlayer(nut);

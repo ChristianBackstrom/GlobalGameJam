@@ -8,16 +8,14 @@ public class EntityData : ScriptableObject
     [Header("Entity Information")]
     public EntityStats stats;
 
-    private EntityStats baseStats;
+    public EntityData baseStats;
 
-    private void OnEnable()
-    {
-        baseStats = stats;
-    }
 
+
+    [ContextMenu("Reset Stats")]
     public void ResetToBaseValues()
     {
-        stats = baseStats;
+        stats = baseStats.stats;
     }
 
     public void AddNutriments(Nutrients additionalNutriments)
@@ -33,6 +31,7 @@ public struct EntityStats
     public string description;
     public bool hasGuard;
     public Nutrients nutriments;
+    public int health;
 
     /// <summary>
     /// Applies damage to this entity, accounting for guard status.
