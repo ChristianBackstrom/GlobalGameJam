@@ -10,7 +10,7 @@ public class BarCodeScanner : MonoBehaviour
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private TextMeshProUGUI resultText;
 
-    [SerializeField] private Nutriments nutriments;
+    [SerializeField] private Nutrients nutriments;
 
 
     private void Start()
@@ -35,7 +35,7 @@ public class BarCodeScanner : MonoBehaviour
         resultText.text = $"Error fetching product data: \n {obj}";
     }
 
-    private void OnFetchSuccess(Nutriments obj)
+    private void OnFetchSuccess(Nutrients obj)
     {
         nutriments = obj;
         resultText.text = $"Product Data: \n Proteins: {obj.proteins}\n Fat: {obj.fat}\n Carbohydrates: {obj.carbohydrates} \n Energy (kcal): {obj.energy_kcal}";

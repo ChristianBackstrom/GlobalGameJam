@@ -1,0 +1,127 @@
+using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class FightManagerSingleton : MonoBehaviour
+{
+    #region Singleton Pattern
+    public static FightManagerSingleton Instance { get; private set; }
+
+    private void InitializeSingleton()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
+    #endregion
+
+    [SerializeField] private string fightSceneName = "FightScene";
+
+    public EntityStats CurrentEnemy;
+
+    private FightState currentFightState;
+    public FightState CurrentFightState
+    {
+        get { return currentFightState; }
+        private set
+        {
+            currentFightState = value;
+            OnFightStateChanged?.Invoke(currentFightState);
+        }
+    }
+
+    public static event Action OnFightStarted;
+    public static event Action OnFightEnded;
+    public static event Action OnTurnResolved;
+    public static event Action<FightState> OnFightStateChanged;
+
+
+    // Handle Turn Order, Fight State, etc.
+    public enum FightState
+    {
+        PlayerTurn,
+        EnemyTurn,
+        Finished
+    }
+
+    private void Awake()
+    {
+        InitializeSingleton();
+    }
+
+#if UNITY_EDITOR
+    [SerializeField] private EntityData debugEnemy;
+    [ContextMenu("Start Debug Fight")]
+    private void StartDebugFight()
+    {
+        StartFight(debugEnemy.stats);
+    }
+#endif
+
+    public void StartFight(EntityStats enemy)
+    {
+        Debug.Log("Fight started with enemy: " + enemy.name);
+        CurrentEnemy = enemy;
+
+        OnFightStarted?.Invoke();
+
+        // Load the fight scene and initialize fight parameters here
+        var loadScene = SceneManager.LoadSceneAsync(fightSceneName, LoadSceneMode.Additive);
+        loadScene.completed += OnFightSceneLoaded;
+    }
+
+    private void OnFightSceneLoaded(AsyncOperation operation)
+    {
+        Debug.Log("Fight scene loaded.");
+
+        // Initialize fight parameters, UI, etc. here
+        CurrentFightState = CurrentEnemy.nutriments.energy < PlayerManagerSingleton.Instance.GetPlayerNutriments().energy
+        ?
+        FightState.PlayerTurn :
+        FightState.EnemyTurn;
+    }
+
+
+    // turn management, attack resolution, etc. would go here
+    public void ResolveTurn(ref EntityStats attacker, ref EntityStats defender, IAction action)
+    {
+        action.Execute(ref attacker, ref defender);
+        Debug.Log("Turn resolved by " + attacker.name);
+        OnTurnResolved?.Invoke();
+
+        if (defender.nutriments.fat <= 0)
+        {
+            EndFight(attacker);
+            CurrentFightState = FightState.Finished;
+            return;
+        }
+
+        // Switch turn
+        if (CurrentFightState == FightState.PlayerTurn)
+        {
+            CurrentFightState = FightState.EnemyTurn;
+        }
+        else if (CurrentFightState == FightState.EnemyTurn)
+        {
+            CurrentFightState = FightState.PlayerTurn;
+        }
+    }
+
+    private void EndFight(EntityStats attacker)
+    {
+        Debug.Log("Fight ended. Winner: " + attacker.name);
+
+        // Unload the fight scene
+        SceneManager.UnloadSceneAsync(fightSceneName);
+
+        // Reset current enemy
+
+        OnFightEnded?.Invoke();
+    }
+}

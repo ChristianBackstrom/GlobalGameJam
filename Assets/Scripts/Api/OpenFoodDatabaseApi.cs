@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class OpenFoodDatabaseApi
 {
-  public static void FetchProductData(string barcode, System.Action<Nutriments> onSuccess, System.Action<string> onError)
+  public static void FetchProductData(string barcode, System.Action<Nutrients> onSuccess, System.Action<string> onError)
   {
     // Implementation for fetching product data from Open Food Database API
     Debug.Log($"Fetching product data for barcode: {barcode}");
@@ -17,7 +17,7 @@ public static class OpenFoodDatabaseApi
     MakeApiRequest(apiUrl, onSuccess, onError);
   }
 
-  private static async void MakeApiRequest(string url, System.Action<Nutriments> onSuccess, System.Action<string> onError)
+  private static async void MakeApiRequest(string url, System.Action<Nutrients> onSuccess, System.Action<string> onError)
   {
     // Implementation for making the API request and handling the response
     Debug.Log($"Making API request to: {url}");
