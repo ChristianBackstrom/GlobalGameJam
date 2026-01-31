@@ -26,6 +26,8 @@ public class PlayerManagerSingleton : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+        
+        playerEntity.ResetToBaseValues();
     }
     #endregion
 
