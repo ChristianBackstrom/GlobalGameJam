@@ -776,7 +776,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 1367866455}
+    TrackingTarget: {fileID: 0}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -1109,6 +1109,7 @@ GameObject:
   - component: {fileID: 1367866456}
   - component: {fileID: 1367866457}
   - component: {fileID: 1367866458}
+  - component: {fileID: 1367866460}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -1174,14 +1175,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &1367866455
-Transform:
+--- !u!224 &1367866455
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367866452}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1189,6 +1189,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1367866456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1205,6 +1210,7 @@ MonoBehaviour:
   stopDistance: 0.05
   moveActionRef: {fileID: 3001919216989983466, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   roomAreaSprite: {fileID: 0}
+  pathLineRender: {fileID: 2055964225}
 --- !u!50 &1367866457
 Rigidbody2D:
   serializedVersion: 5
@@ -1268,6 +1274,14 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!222 &1367866460
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367866452}
+  m_CullTransparentMesh: 1
 --- !u!1 &1520564080
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,6 +1681,76 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEntity: {fileID: 11400000, guid: c2a874385defd3541b6abb6b2cce40f4, type: 2}
+--- !u!1 &2055964224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2055964227}
+  - component: {fileID: 2055964226}
+  - component: {fileID: 2055964225}
+  m_Layer: 0
+  m_Name: LineHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2055964225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055964224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b33b2e663e78774c9f0c9af55018725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Radishmouse.UILineRenderer
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  points:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  thickness: 10
+  center: 1
+--- !u!222 &2055964226
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055964224}
+  m_CullTransparentMesh: 1
+--- !u!224 &2055964227
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055964224}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 600.9107, y: 352.06662}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1676,7 +1760,8 @@ SceneRoots:
   - {fileID: 1259572363}
   - {fileID: 730351815}
   - {fileID: 1217206197}
-  - {fileID: 1367866455}
   - {fileID: 1093975344}
   - {fileID: 1139528122}
   - {fileID: 7902380}
+  - {fileID: 1367866455}
+  - {fileID: 2055964227}
