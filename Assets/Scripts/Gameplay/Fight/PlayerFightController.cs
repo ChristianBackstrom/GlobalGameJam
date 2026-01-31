@@ -1,14 +1,17 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerFightController : MonoBehaviour
 {
-    [SerializeField] private Button attackButton;
-    [SerializeField] private Button defendButton;
+    [SerializeField] private Button actionButtonPrefab;
+    [SerializeField] private Transform actionButtonContainer;
 
     [SerializeField] private TMP_Text playerHealthText;
+
+    private Dictionary<IAction, Button> availableActions = new Dictionary<IAction, Button>();
 
     private void OnEnable()
     {
@@ -16,30 +19,14 @@ public class PlayerFightController : MonoBehaviour
         FightManagerSingleton.OnFightEnded += HandleFightEnded;
         FightManagerSingleton.OnTurnResolved += HandleTurnResolved;
         FightManagerSingleton.OnFightStateChanged += OnFightStateChanged;
-
-        attackButton.onClick.AddListener(() =>
-        {
-
-            var attackAction = new Attack();
-
-            ExecuteActionByType(attackAction);
-        });
-
-        defendButton.onClick.AddListener(() =>
-        {
-            var guardAction = new Guard();
-            ExecuteActionByType(guardAction);
-        });
     }
 
     private void ExecuteActionByType<T>(T action) where T : IAction
     {
         var player = PlayerManagerSingleton.Instance.GetPlayerEntity();
         var enemy = FightManagerSingleton.Instance.CurrentEnemy;
-        FightManagerSingleton.Instance.ResolveTurn(ref player.stats, ref enemy, action);
 
-        // Write the modified enemy back to the singleton
-        FightManagerSingleton.Instance.CurrentEnemy = enemy;
+        FightManagerSingleton.Instance.ResolveTurn(ref player.stats, ref enemy, action);
     }
 
 
@@ -55,18 +42,24 @@ public class PlayerFightController : MonoBehaviour
     {
         if (state == FightManagerSingleton.FightState.PlayerTurn)
         {
-            attackButton.interactable = true;
-            defendButton.interactable = true;
-
-            if (PlayerManagerSingleton.Instance.GetPlayerEntity().stats.hasGuard)
+            // Enable action buttons
+            foreach (var actionButtons in availableActions)
             {
-                PlayerManagerSingleton.Instance.GetPlayerEntity().stats.hasGuard = false;
+                if (actionButtons.Key.CanUse())
+                    actionButtons.Value.interactable = true;
+                else
+                    actionButtons.Value.interactable = false;
+
+                actionButtons.Key.UpdateState();
             }
         }
         else
         {
-            attackButton.interactable = false;
-            defendButton.interactable = false;
+            // Disable action buttons
+            foreach (var actionButtons in availableActions)
+            {
+                actionButtons.Value.interactable = false;
+            }
         }
     }
 
@@ -76,6 +69,21 @@ public class PlayerFightController : MonoBehaviour
         // Update UI to show fight elements
 
         playerHealthText.text = PlayerManagerSingleton.Instance.GetPlayerNutriments().fat.ToString();
+        foreach (var action in PlayerManagerSingleton.Instance.GetPlayerEntity().actions)
+        {
+            IAction builtAction = action switch
+            {
+                ActionName.Attack => new Attack(),
+                ActionName.Guard => new Guard(),
+                ActionName.ChargedStrike => new ChargedAttack(),
+                ActionName.HeavyStrike => new HeavyStrike(),
+                _ => null
+            };
+            var button = Instantiate(actionButtonPrefab, actionButtonContainer);
+            button.GetComponentInChildren<TMP_Text>().text = action.ToString();
+            button.onClick.AddListener(() => ExecuteActionByType(builtAction));
+            availableActions.Add(builtAction, button);
+        }
     }
 
     private void HandleFightEnded()

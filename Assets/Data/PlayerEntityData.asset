@@ -15,8 +15,10 @@ MonoBehaviour:
   stats:
     name: Player
     description: 
+    hasGuard: 0
     nutriments:
       proteins: 10
       fat: 10000
       carbohydrates: 5
       energy: 5
+  actions: 00000000010000000200000003000000
