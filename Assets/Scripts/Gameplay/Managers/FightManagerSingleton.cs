@@ -118,10 +118,14 @@ public class FightManagerSingleton : MonoBehaviour
         Debug.Log("Turn resolved by " + attacker.name + "; defender has " + defender.nutriments.fat + " fat left.");
         OnTurnResolved?.Invoke();
 
-        if (defender.nutriments.fat <= 0)
+        if (defender.health <= 0)
         {
             EndFight(attacker);
             CurrentFightState = FightState.Finished;
+            if (defender.name == PlayerManagerSingleton.Instance.GetPlayerEntity().stats.name)
+            {
+                SimpleSceneManager.Instance.LoadGameSceneAdditive(SimpleSceneManager.deathSceneName);
+            }
             return;
         }
 
@@ -144,7 +148,6 @@ public class FightManagerSingleton : MonoBehaviour
 
         // Unload the fight scene
         SceneManager.UnloadSceneAsync(fightSceneName);
-
         // Reset current enemy
 
         OnFightEnded?.Invoke();

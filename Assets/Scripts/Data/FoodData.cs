@@ -18,6 +18,7 @@ namespace FoodDatabase
   [System.Serializable]
   public struct Nutrients
   {
+    public string category;
     public float proteins;
     public float fat;
     public float carbohydrates;
@@ -32,7 +33,8 @@ namespace FoodDatabase
         energy = a.energy + b.energy,
         proteins = a.proteins + b.proteins,
         fat = a.fat + b.fat,
-        carbohydrates = a.carbohydrates + b.carbohydrates
+        carbohydrates = a.carbohydrates + b.carbohydrates,
+        category = a.category
       };
     }
 
@@ -43,7 +45,8 @@ namespace FoodDatabase
         energy = a.energy - b.energy,
         proteins = a.proteins - b.proteins,
         fat = a.fat - b.fat,
-        carbohydrates = a.carbohydrates - b.carbohydrates
+        carbohydrates = a.carbohydrates - b.carbohydrates,
+        category = a.category
       };
     }
 
@@ -54,7 +57,8 @@ namespace FoodDatabase
         energy = a.energy * scalar,
         proteins = a.proteins * scalar,
         fat = a.fat * scalar,
-        carbohydrates = a.carbohydrates * scalar
+        carbohydrates = a.carbohydrates * scalar,
+        category = a.category
       };
     }
 
