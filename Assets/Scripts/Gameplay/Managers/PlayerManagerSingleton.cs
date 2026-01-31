@@ -10,6 +10,11 @@ public class PlayerManagerSingleton : MonoBehaviour
 
     public List<string> categories = new List<string>();
 
+    public float proteinModifier = .5f;
+    public float fatModifier = .5f;
+    public float carbModifier = .5f;
+    public float energyModifier = .5f;
+
     private void InitializeSingleton()
     {
         if (Instance != null && Instance != this)
@@ -115,7 +120,10 @@ public class PlayerManagerSingleton : MonoBehaviour
     {
         if (playerEntity != null)
         {
-            playerEntity.AddNutriments(additionalNutriments);
+            playerEntity.stats.nutriments.proteins += additionalNutriments.proteins * proteinModifier;
+            playerEntity.stats.nutriments.fat += additionalNutriments.fat * fatModifier;
+            playerEntity.stats.nutriments.carbohydrates += additionalNutriments.carbohydrates * carbModifier;
+            playerEntity.stats.nutriments.energy += additionalNutriments.energy * energyModifier;
         }
         else
         {
